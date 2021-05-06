@@ -1,0 +1,37 @@
+.cls-1 {
+  fill: none;
+  stroke: #000;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 12.5px;
+  fill-rule: evenodd;
+
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 5s ease-in-out forwards;
+}
+
+.cls-2 {
+  font-size: 60px;
+  font-family: Poppins-SemiBold, Poppins;
+  font-weight: 600;
+
+  fill: none;
+  stroke: black;
+  stroke-dasharray: 1000;
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-dashoffset: 1000;
+  animation: dash 5s ease-in-out forwards;
+}
+
+.cls-3 {
+  font-family: Poppins-Thin, Poppins;
+  font-weight: 200;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

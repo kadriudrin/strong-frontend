@@ -1,0 +1,55 @@
+.tab {
+  height: 48px;
+  background-color: black;
+}
+
+main {
+  display: block;
+  height: auto;
+  position: relative;
+}
+
+section {
+  border: red solid 20px;
+  box-sizing: border-box;
+  background: linear-gradient(
+    40deg,
+    rgba(2, 200, 36, 1) 0%,
+    rgba(200, 250, 221, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  overflow: visible;
+  position: relative;
+}
+
+logo {
+  width: 80%;
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+down {
+  flex: 1 1 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+info {
+  width: 80%;
+  flex: 1 1 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}

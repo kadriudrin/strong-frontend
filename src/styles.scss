@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+html {
+  font-family: "Poppins", sans-serif;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  -ms-scroll-chaining: none;
+  overscroll-behavior: none;
+  -webkit-perspective: 1px;
+  perspective: 1px;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+app-root {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -ms-scroll-snap-destination: 0 0;
+  scroll-snap-destination: 0 0;
+  -ms-scroll-snap-type: y mandatory;
+  scroll-snap-type: y mandatory;
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
