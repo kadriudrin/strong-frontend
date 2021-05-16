@@ -1,9 +1,63 @@
 <main>
   <section>
-    <logo></logo>
+    <ng-lottie
+      class="logo"
+      [options]="opt"
+      (error)="error($event)"
+      (animationCreated)="animationCreated($event)"
+    ></ng-lottie>
     <down></down>
   </section>
   <section>
     <info></info>
+  </section>
+  <section class="product">
+    <div class="imgDiv" (scroll)="onColorScroll($event)">
+      <img class="mainImage" src="/assets/moonless_night.png" />
+      <img class="mainImage" src="/assets/white_orchid.png" />
+      <img class="mainImage" src="/assets/deep_sky.png" />
+      <img class="mainImage" src="/assets/cherry_blossom.png" />
+      <img class="mainImage" src="/assets/rose.png" />
+    </div>
+    <div class="headerTitle" [ngClass]="{ trans: section !== 2 }">
+      <span
+        ><h1>
+          <span class="beforeTitle">Strong </span>
+          <span class="title">{{ title }}</span>
+        </h1></span
+      >
+      <span><p>Natural curvature and strength</p></span>
+    </div>
+    <div class="content">
+      <!-- <span><h3>Size</h3></span> -->
+      <div class="sizes" [ngClass]="{ trans: section !== 2 }">
+        <button class="sizeOption">XS</button>
+        <button class="sizeOption">S</button>
+        <button class="sizeOption">M</button>
+        <button class="sizeOption">L</button>
+        <button class="sizeOption">XL</button>
+      </div>
+      <!-- <div class="sizes"> -->
+      <!--   <button class="colorOption"></button> -->
+      <!--   <button class="colorOption"></button> -->
+      <!--   <button class="colorOption"></button> -->
+      <!--   <button class="colorOption"></button> -->
+      <!--   <button class="colorOption"></button> -->
+      <!-- </div> -->
+    </div>
+    <div class="footer">
+      <div class="prices">
+        <div class="firstRow" [ngClass]="{ trans: section !== 2 }">
+          <span class="oldPriceStrike"
+            ><span class="oldPrice">$39.98</span></span
+          >
+          <span class="pricePercent">-50%</span>
+        </div>
+        <span class="price" [ngClass]="{ trans: section !== 2 }">$19.99</span>
+      </div>
+      <button class="addButton" [ngClass]="{ trans: section !== 2 }">
+        <span class="add">ADD</span> <cart></cart>
+      </button>
+    </div>
   </section>
 </main>

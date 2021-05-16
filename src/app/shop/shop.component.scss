@@ -10,14 +10,7 @@ main {
 }
 
 section {
-  border: red solid 20px;
   box-sizing: border-box;
-  background: linear-gradient(
-    40deg,
-    rgba(2, 200, 36, 1) 0%,
-    rgba(200, 250, 221, 1) 35%,
-    rgba(0, 212, 255, 1) 100%
-  );
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   display: flex;
@@ -31,8 +24,8 @@ section {
   position: relative;
 }
 
-logo {
-  width: 80%;
+.logo {
+  width: 20rem;
   flex: 1 1 100%;
   display: flex;
   justify-content: center;
@@ -40,7 +33,7 @@ logo {
 }
 
 down {
-  flex: 1 1 48px;
+  flex: 1 1 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,4 +45,238 @@ info {
   display: flex;
   flex-flow: column;
   justify-content: center;
+}
+
+.product {
+  justify-content: space-evenly;
+}
+
+.headerTitle {
+  flex: 0 1 15%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+  transform: var(--transLeft);
+  transition: transform 0.5s ease-out 0.25s;
+}
+
+.title {
+  color: var(--themeColor);
+  transition: color 0.5s ease-out;
+}
+
+.content {
+  flex: 0 1 10%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.sizes {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  position: relative;
+  transform: var(--transLeft);
+  transition: transform 0.5s ease-out 0.75s;
+}
+
+.sizeOption {
+  flex: 0 1 10%;
+  min-width: 2rem;
+  border: 1px solid var(--themeColor);
+  background: transparent;
+  color: var(--themeColor);
+  transition: color 0.5s ease-out, border 0.5s ease-out;
+  font-size: 1.5rem;
+  font-family: "Poppins";
+  font-weight: 200;
+  display: flex;
+  justify-content: center;
+  border-radius: 5vh;
+  align-items: center;
+}
+
+.sizeOption:focus {
+  background: var(--themeColor);
+  color: #f8f0fb;
+}
+
+.colorOption {
+  border: 0;
+  flex: 0 1 15%;
+  height: 100%;
+  color: white;
+  border-radius: 5vh;
+}
+
+.colorOption:nth-child(1) {
+  background-color: #19180a;
+}
+
+.colorOption:nth-child(2) {
+  background-color: #f8f0fb;
+}
+
+.colorOption:nth-child(3) {
+  background-color: #3a7fbb;
+}
+
+.colorOption:nth-child(4) {
+  background-color: #bc243b;
+}
+
+.colorOption:nth-child(5) {
+  background-color: #e86a92;
+}
+
+.mainImage {
+  border-radius: 35%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  min-width: 0;
+  min-height: 0;
+  scroll-snap-align: start;
+  width: 100vw;
+  flex: 0 0 auto;
+  scroll-snap-stop: always;
+}
+
+.imgDiv {
+  flex: 1 1 55%;
+  width: 100%;
+  min-height: 0;
+  min-width: 0;
+  margin-top: 1em;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  -webkit-overflow-scrolling: touch;
+  // overflow-x: scroll;
+  // scroll-behavior: smooth;
+  // scroll-snap-type: x mandatory;
+  opacity: var(--transO);
+  transition: opacity 0.5s ease-in-out;
+}
+
+.footer {
+  flex: 0 1 15%;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.addButton {
+  border: 0;
+  height: 100%;
+  flex: 0 1 50%;
+  background: var(--themeColor);
+  font-size: 1rem;
+  font-family: "Poppins";
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  border-radius: 10vh 0 0 0;
+  align-items: center;
+  position: relative;
+  transform: var(--transLeft);
+  transition: transform 0.5s ease-out 1s, background 0.5s ease-out;
+}
+
+.addButton:active {
+  opacity: 0.3;
+  transition: opacity 0.05;
+}
+
+cart {
+  width: 1.5rem;
+  max-width: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add {
+  margin-right: 0.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #f8f0fb;
+}
+
+.prices {
+  flex: 1 1 50%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  margin: 0 0 1rem 1rem;
+  height: calc(100% - 1rem);
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: 400;
+  position: relative;
+  transform: var(--transLeft);
+  transition: transform 0.5s ease-out 1.5s;
+}
+
+.firstRow {
+  width: 100%;
+  position: relative;
+  transform: var(--transLeft);
+  transition: transform 0.5s ease-out 1.25s;
+}
+
+.oldPrice {
+  font-size: 1.5rem;
+  font-weight: 200;
+  color: #5f5f5f;
+}
+
+.oldPriceStrike {
+  color: #00000063;
+  text-decoration: line-through;
+}
+
+.filler {
+  flex: 1 1 100%;
+}
+
+.pricePercent {
+  font-size: 1rem;
+  font-weight: 200;
+  color: #f8f0fb;
+  background-color: #e86a92;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin: 0 1rem;
+}
+h3,
+p {
+  font-size: 1rem;
+  font-weight: 200;
+  margin: 0 1rem;
+}
+
+.trans {
+  transition: none !important;
 }

@@ -15,13 +15,50 @@ body {
   height: 100%;
   margin: 0;
   overflow: hidden;
+  background-color: #f8f0fb;
+  touch-action: pan-x pan-y;
 }
 
+@-webkit-keyframes bg {
+  0% {
+    background-position: 0% 94%;
+  }
+  50% {
+    background-position: 100% 7%;
+  }
+  100% {
+    background-position: 0% 94%;
+  }
+}
+@-moz-keyframes bg {
+  0% {
+    background-position: 0% 94%;
+  }
+  50% {
+    background-position: 100% 7%;
+  }
+  100% {
+    background-position: 0% 94%;
+  }
+}
+@keyframes bg {
+  0% {
+    background-position: 0% 94%;
+  }
+  50% {
+    background-position: 100% 7%;
+  }
+  100% {
+    background-position: 0% 94%;
+  }
+}
 app-root {
+  width: 100vw;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
+  overflow-x: hidden;
   scroll-behavior: smooth;
   -ms-scroll-snap-destination: 0 0;
   scroll-snap-destination: 0 0;
@@ -30,6 +67,81 @@ app-root {
   display: block;
 }
 
-* {
+path {
   box-sizing: border-box;
+  -webkit-animation: fillStroke 4s ease-in-out infinite;
+  -moz-animation: fillStroke 4s ease-in-out infinite;
+  animation: fillStroke 4s ease-in-out infinite;
+}
+
+@keyframes fillStroke {
+  0%,
+  100% {
+    fill: #3a7fbb;
+    stroke: #3a7fbb;
+    color: #3a7fbb;
+  }
+  25% {
+    fill: #bc243b;
+    stroke: #bc243b;
+    color: #bc243b;
+  }
+  50% {
+    fill: #19180a;
+    stroke: #19180a;
+    color: #19180a;
+  }
+  75% {
+    fill: #e86a92ff;
+    stroke: #e86a92ff;
+    color: #e86a92ff;
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  html {
+    font-size: 22px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  html {
+    font-size: 24px;
+  }
+  .prices {
+    flex-flow: row-reverse !important;
+    align-items: center !important;
+    .price {
+      margin-right: 0.5em;
+    }
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  html {
+    font-size: 28px;
+  }
+}
+
+@media only screen and (min-width: 2600px) {
+  html {
+    font-size: 64px;
+  }
 }
