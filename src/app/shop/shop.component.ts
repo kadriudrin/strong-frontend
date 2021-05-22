@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
-import { easeInOut, lerp } from '../utils/utils';
+import { Order } from './models/order.model';
 
 @Component({
     selector: 'shop',
@@ -18,6 +18,10 @@ export class ShopComponent {
     public startExposure: any;
     public firstTimeBuy = true;
     public firstTimeBuyScroll = true;
+    public selectedSize = '';
+    public basket: Order[] = [];
+    public payIndex = 0;
+    public shippingMethod = -1;
 
     public opt: AnimationOptions = {
         loop: false,
@@ -34,7 +38,14 @@ export class ShopComponent {
             `${window.innerHeight * 0.01}px`
         );
         document.documentElement.style.setProperty('--themeColor', '#19180A');
+        const newBasket = localStorage.getItem('basket');
+        if (newBasket !== null) this.basket = JSON.parse(newBasket);
     }
+
+    selectSize(newSize: string): void {
+        this.selectedSize = newSize;
+    }
+
     scroll(
         imgDiv: HTMLElement,
         where: number,
@@ -51,26 +62,14 @@ export class ShopComponent {
         imgDiv.style.scrollBehavior = 'auto';
         imgDiv.style.setProperty('scroll-snap-type', 'none');
         imgDiv.style.overflowX = 'hidden';
-        console.log('New state');
 
         const from = elSize * Math.round(imgDiv.scrollLeft / elSize);
-        console.log(imgDiv.scrollLeft);
         let i = 1;
         let goal: number;
         do {
             goal = Math.min(
                 Math.max(from + i * elSize * (from < where ? 1 : -1), 0),
                 imgDiv.scrollWidth
-            );
-            console.log(
-                'Called goal: ',
-                goal,
-                ' i: ',
-                i,
-                ' from: ',
-                from,
-                ' time*i: ',
-                time * i
             );
             i++;
             this.tref.push(
@@ -94,10 +93,14 @@ export class ShopComponent {
     ngOnChanges(changes: SimpleChanges): void {
         const now = changes.section.currentValue,
             before = changes.section.previousValue;
-        console.log(now);
         if (now != before) {
             if (now !== 2) {
                 if (this.firstTimeBuyScroll) {
+                    document.documentElement.style.setProperty('--transO', '0');
+                    document.documentElement.style.setProperty(
+                        '--transLeft',
+                        'translateX(-800px)'
+                    );
                     setTimeout(() => {
                         const imgDiv = document
                             .getElementsByClassName('imgDiv')
@@ -118,30 +121,39 @@ export class ShopComponent {
                     }, 500);
                     this.firstTimeBuyScroll = false;
                 } else if (before === 2) {
-                    console.log('GO BACK');
-                    const imgDiv = document
-                        .getElementsByClassName('imgDiv')
-                        .item(0);
-                    if (imgDiv) {
-                        this.tref.forEach((val: any) => {
-                            clearTimeout(val);
-                        });
-                        imgDiv.scrollTo({
-                            behavior: 'auto',
-                            left: imgDiv.scrollWidth,
-                        });
-                        (imgDiv as HTMLElement).style.scrollBehavior = 'auto';
-                        (imgDiv as HTMLElement).style.setProperty(
-                            'scroll-snap-type',
-                            'none'
-                        );
-                        (imgDiv as HTMLElement).style.overflowX = 'hidden';
-                    }
+                    /* console.log('GO BACK'); */
+                    /* const imgDiv = document */
+                    /*     .getElementsByClassName('imgDiv') */
+                    /*     .item(0); */
+                    /* if (imgDiv) { */
+                    /*     this.tref.forEach((val: any) => { */
+                    /*         clearTimeout(val); */
+                    /*     }); */
+                    /*     (imgDiv as HTMLElement).style.scrollBehavior = 'auto'; */
+                    /*     (imgDiv as HTMLElement).style.setProperty( */
+                    /*         'scroll-snap-type', */
+                    /*         'none' */
+                    /*     ); */
+                    /*     (imgDiv as HTMLElement).style.overflowX = 'hidden'; */
+                    /*     imgDiv.scrollTo({ */
+                    /*         behavior: 'auto', */
+                    /*         left: imgDiv.scrollWidth, */
+                    /*     }); */
+                    /*     setTimeout(() => { */
+                    /*         (imgDiv as HTMLElement).style.scrollBehavior = */
+                    /*             'smooth'; */
+                    /*         (imgDiv as HTMLElement).style.setProperty( */
+                    /*             'scroll-snap-type', */
+                    /*             'x mandatory' */
+                    /*         ); */
+                    /*         (imgDiv as HTMLElement).style.overflowX = 'scroll'; */
+                    /*     }, 500); */
+                    /* } */
                     document.documentElement.style.setProperty('--transO', '0');
-                    document.documentElement.style.setProperty(
-                        '--transLeft',
-                        'translateX(-800px)'
-                    );
+                    /* document.documentElement.style.setProperty( */
+                    /*     '--transLeft', */
+                    /*     'translateX(-500px)' */
+                    /* ); */
                 }
             }
             if (now === 0) {
@@ -149,17 +161,38 @@ export class ShopComponent {
             } else if (now !== 0 && before === 0) {
                 this.animationItem?.goToAndStop(0);
             } else if (now === 2) {
-                const scrollS = this.firstTimeBuy ? 650 : 500;
                 const imgDiv = document
                     .getElementsByClassName('imgDiv')
                     .item(0);
                 if (imgDiv)
-                    this.scroll(
-                        imgDiv as HTMLElement,
-                        0,
-                        window.innerWidth,
-                        scrollS
-                    );
+                    if (this.firstTimeBuy) {
+                        this.scroll(
+                            imgDiv as HTMLElement,
+                            0,
+                            window.innerWidth,
+                            600
+                        );
+                    } else {
+                        (imgDiv as HTMLElement).style.scrollBehavior = 'auto';
+                        (imgDiv as HTMLElement).style.setProperty(
+                            'scroll-snap-type',
+                            'none'
+                        );
+                        (imgDiv as HTMLElement).style.overflowX = 'hidden';
+                        imgDiv.scroll({
+                            behavior: 'auto',
+                            left: 0,
+                        });
+                        setTimeout(() => {
+                            (imgDiv as HTMLElement).style.scrollBehavior =
+                                'smooth';
+                            (imgDiv as HTMLElement).style.setProperty(
+                                'scroll-snap-type',
+                                'x mandatory'
+                            );
+                            (imgDiv as HTMLElement).style.overflowX = 'scroll';
+                        }, 500);
+                    }
                 document.documentElement.style.setProperty('--transO', '1');
                 document.documentElement.style.setProperty(
                     '--transLeft',
@@ -208,5 +241,62 @@ export class ShopComponent {
 
     animationCreated(animationItem: AnimationItem): void {
         this.animationItem = animationItem;
+    }
+
+    addButton(): void {
+        if (this.selectedSize !== '') {
+            const ct = this.getRespectiveColorAndTitle(this.colorNumber);
+            let newSrc = 'moonless_night.png';
+            switch (this.colorNumber) {
+            case 1:
+                newSrc = 'white_orchid.png';
+                break;
+            case 2:
+                newSrc = 'deep_sky.png';
+                break;
+            case 3:
+                newSrc = 'cherry_blossom.png';
+                break;
+            case 4:
+                newSrc = 'rose.png';
+                break;
+            }
+            const order = new Order(
+                this.selectedSize,
+                ct.color,
+                ct.title,
+                newSrc
+            );
+            console.log('Added new order, ', order);
+            this.basket.push(order);
+            localStorage.setItem('basket', JSON.stringify(this.basket));
+        } else {
+            console.log('Please select size');
+        }
+    }
+    removeOrder(i: number): void {
+        this.basket.splice(i, 1);
+        localStorage.setItem('basket', JSON.stringify(this.basket));
+    }
+
+    payButton(dir: number, condition = true, msg = ''): void {
+        if (!condition) {
+            console.log(msg);
+            return;
+        }
+
+        this.payIndex += dir;
+        const payDiv = document.getElementsByClassName('basketSection').item(0);
+
+        if (payDiv)
+            payDiv.scroll({
+                behavior: 'smooth',
+                left: window.innerWidth * this.payIndex,
+            });
+    }
+
+    setShippingMethod(method: number): void {
+        this.shippingMethod = method;
+        console.log(this.shippingMethod);
     }
 }

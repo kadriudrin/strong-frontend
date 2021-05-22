@@ -11,7 +11,7 @@
   <section>
     <info></info>
   </section>
-  <section class="product">
+  <section class="product" [ngClass]="{ transS: section !== 2 }">
     <div class="imgDiv" (scroll)="onColorScroll($event)">
       <img class="mainImage" src="/assets/moonless_night.png" />
       <img class="mainImage" src="/assets/white_orchid.png" />
@@ -31,11 +31,41 @@
     <div class="content">
       <!-- <span><h3>Size</h3></span> -->
       <div class="sizes" [ngClass]="{ trans: section !== 2 }">
-        <button class="sizeOption">XS</button>
-        <button class="sizeOption">S</button>
-        <button class="sizeOption">M</button>
-        <button class="sizeOption">L</button>
-        <button class="sizeOption">XL</button>
+        <button
+          class="sizeOption"
+          (click)="selectSize('xs')"
+          [ngClass]="{ active: selectedSize === 'xs' }"
+        >
+          XS
+        </button>
+        <button
+          class="sizeOption"
+          (click)="selectSize('s')"
+          [ngClass]="{ active: selectedSize === 's' }"
+        >
+          S
+        </button>
+        <button
+          class="sizeOption"
+          (click)="selectSize('m')"
+          [ngClass]="{ active: selectedSize === 'm' }"
+        >
+          M
+        </button>
+        <button
+          class="sizeOption"
+          (click)="selectSize('l')"
+          [ngClass]="{ active: selectedSize === 'l' }"
+        >
+          L
+        </button>
+        <button
+          class="sizeOption"
+          (click)="selectSize('xl')"
+          [ngClass]="{ active: selectedSize === 'xl' }"
+        >
+          XL
+        </button>
       </div>
       <!-- <div class="sizes"> -->
       <!--   <button class="colorOption"></button> -->
@@ -55,9 +85,258 @@
         </div>
         <span class="price" [ngClass]="{ trans: section !== 2 }">$19.99</span>
       </div>
-      <button class="addButton" [ngClass]="{ trans: section !== 2 }">
+      <button class="addButton" (click)="addButton()">
         <span class="add">ADD</span> <cart></cart>
       </button>
+    </div>
+  </section>
+  <section class="basketSection">
+    <div class="basketSelection">
+      <div class="orderContainer">
+        <div class="order" *ngFor="let o of basket; index as i">
+          <img class="orderImage" src="/assets/{{ o.src }}" />
+          <div class="rightSideOrder">
+            <div class="clearOrder">
+              <span class="orderTopTitle">{{ i + 1 }} - $19.99</span>
+              <button class="clearOption" (click)="removeOrder(i)">
+                <clear></clear>
+              </button>
+            </div>
+            <div class="rightSideOrderTitle">
+              <span class="orderTitle">Strong </span>
+              <span class="orderTitle" [ngStyle]="{ color: o.color }">{{
+                o.title
+              }}</span>
+            </div>
+            <span class="orderSize" [ngStyle]="{ background: o.color }">{{
+              o.size
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="orderFooter">
+        <div class="left">
+          <span class="totalPrice tPLighter">{{ basket.length }} TOTAL</span>
+          <span class="totalPrice"
+            >${{ (19.99 * basket.length).toFixed(2) }}</span
+          >
+        </div>
+        <button
+          class="proceedButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="
+            payButton(1, true, 'Please add one or more products to proceed')
+          "
+        >
+          <span class="add proceedText">PROCEED</span>
+        </button>
+      </div>
+    </div>
+    <div class="shippingSelection">
+      <div class="payTitle">Shipping Method</div>
+      <div class="payContent">
+        <table>
+          <tr>
+            <th class="method">Method</th>
+            <th>Cost</th>
+            <th>Estimated Delivery</th>
+            <th>Tracking</th>
+          </tr>
+          <tr
+            (click)="setShippingMethod(0)"
+            [ngClass]="{ trChecked: shippingMethod === 0 }"
+          >
+            <td>
+              <div class="overCheck">
+                <div
+                  class="checkmark"
+                  [ngClass]="{ inputChecked: shippingMethod === 0 }"
+                ></div>
+                <label for="male"> Economic</label>
+              </div>
+            </td>
+            <td>$9.95</td>
+            <td>25-35 days</td>
+            <td><check></check></td>
+          </tr>
+          <tr
+            (click)="setShippingMethod(1)"
+            [ngClass]="{ trChecked: shippingMethod === 1 }"
+          >
+            <td>
+              <div class="overCheck">
+                <div
+                  class="checkmark"
+                  [ngClass]="{ inputChecked: shippingMethod === 1 }"
+                ></div>
+                <label for="male"> Comfort</label>
+              </div>
+            </td>
+            <td>$14.95</td>
+            <td>10-20 days</td>
+            <td><check></check></td>
+          </tr>
+          <tr
+            (click)="setShippingMethod(2)"
+            [ngClass]="{ trChecked: shippingMethod === 2 }"
+          >
+            <td>
+              <div class="overCheck">
+                <div
+                  class="checkmark"
+                  [ngClass]="{ inputChecked: shippingMethod === 2 }"
+                ></div>
+                <label for="male"> Express</label>
+              </div>
+            </td>
+            <td>$29.95</td>
+            <td>5-10 days</td>
+            <td><check></check></td>
+          </tr>
+        </table>
+      </div>
+      <div class="payTitle">Billing Address</div>
+      <div class="billingAddress">
+        <div class="billingDouble">
+          <div class="field">
+            <label for="fname">Full Name</label>
+            <input type="text" id="fname" name="fname" />
+          </div>
+          <div class="field">
+            <label for="pnum">Phone Number</label>
+            <input type="text" id="pnum" name="pnum" />
+          </div>
+        </div>
+        <div class="billingDouble">
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input type="text" id="email" name="email" />
+          </div>
+        </div>
+        <div class="billingDouble">
+          <div class="field">
+            <label for="street1">Street address</label>
+            <input type="text" id="street1" name="street1" />
+          </div>
+          <div class="field">
+            <label for="street2">Street address 2</label>
+            <input type="text" id="street2" name="street2" />
+          </div>
+        </div>
+        <div class="billingDouble">
+          <div class="field">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" />
+          </div>
+          <div class="field">
+            <label for="state">State/Province</label>
+            <input type="text" id="state" name="state" />
+          </div>
+        </div>
+        <div class="billingDouble">
+          <div class="field">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" />
+          </div>
+          <div class="field">
+            <label for="zip">Zip Code</label>
+            <input type="text" id="zip" name="zip" />
+          </div>
+        </div>
+      </div>
+      <div class="orderFooter orderNav">
+        <button
+          class="backButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="payButton(-1)"
+        >
+          <span class="add proceedText">BACK</span>
+        </button>
+
+        <button
+          class="proceedButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="
+            payButton(
+              1,
+              basket.length !== 0,
+              'Please add one or more products to proceed'
+            )
+          "
+        >
+          <span class="add proceedText">CONTINUE</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="shippingSelection">
+      <div class="payTitle">Billing Address</div>
+      <div class="payContent"></div>
+      <div class="orderFooter orderNav">
+        <button
+          class="backButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="payButton(-1)"
+        >
+          <span class="add proceedText">BACK</span>
+        </button>
+
+        <button
+          class="proceedButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="
+            payButton(
+              1,
+              basket.length !== 0,
+              'Please add one or more products to proceed'
+            )
+          "
+        >
+          <span class="add proceedText">CONTINUE</span>
+        </button>
+      </div>
+    </div>
+    <div class="paymentSelection">
+      <div class="payTitle">Payment Information</div>
+      <div class="payContent"></div>
+      <div class="orderFooter orderNav">
+        <button
+          class="backButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="payButton(-1)"
+        >
+          <span class="add proceedText">BACK</span>
+        </button>
+
+        <button
+          class="proceedButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="
+            payButton(
+              1,
+              basket.length !== 0,
+              'Please add one or more products to proceed'
+            )
+          "
+        >
+          <span class="add proceedText">CONTINUE</span>
+        </button>
+      </div>
+    </div>
+    <div class="successfulPayment">
+      <div class="payTitle">Review Order</div>
+      <div class="payContent"></div>
+      <div class="orderFooter orderNav">
+        <button
+          class="backButton"
+          [ngClass]="{ disabledButton: basket.length === 0 }"
+          (click)="payButton(-1)"
+        >
+          <span class="add proceedText">BACK</span>
+        </button>
+
+        <div class="filler"></div>
+      </div>
     </div>
   </section>
 </main>
