@@ -114,7 +114,7 @@
           </div>
         </div>
       </div>
-      <div class="orderFooter">
+      <div class="orderFooter firstOrderFooter">
         <div class="left">
           <span class="totalPrice tPLighter">{{ basket.length }} TOTAL</span>
           <span class="totalPrice"
@@ -122,13 +122,13 @@
           >
         </div>
         <button
-          class="proceedButton"
+          class="proceedButton nextBtn"
           [ngClass]="{ disabledButton: basket.length === 0 }"
           (click)="
             payButton(1, true, 'Please add one or more products to proceed')
           "
         >
-          <span class="add proceedText">PROCEED</span>
+          <next [disabledButton]="basket.length === 0"></next>
         </button>
       </div>
     </div>
@@ -197,25 +197,25 @@
       </div>
       <div class="orderFooter orderNav">
         <button
-          class="backButton"
+          class="proceedButton"
           [ngClass]="{ disabledButton: basket.length === 0 }"
           (click)="payButton(-1)"
         >
-          <span class="add proceedText">BACK</span>
+          <back></back>
         </button>
 
         <button
-          class="proceedButton"
-          [ngClass]="{ disabledButton: basket.length === 0 }"
+          class="proceedButton nextBtn"
+          [ngClass]="{ disabledButton: shippingMethod === -1 }"
           (click)="
             payButton(
               1,
-              basket.length !== 0,
-              'Please add one or more products to proceed'
+              shippingMethod !== -1,
+              'Please select a valid shipping method'
             )
           "
         >
-          <span class="add proceedText">CONTINUE</span>
+          <next [disabledButton]="shippingMethod === -1"></next>
         </button>
       </div>
     </div>
@@ -224,65 +224,94 @@
       <div class="payTitle">Billing Address</div>
       <div class="payContent">
         <div class="billingAddress">
+          <div class="paySubtitle">Contact</div>
           <div class="billingDouble">
             <div class="field">
-              <label for="fname">Full Name</label>
-              <input type="text" id="fname" name="fname" />
+              <input
+                type="text"
+                id="fname"
+                name="fname"
+                placeholder="Full name"
+              />
             </div>
             <div class="field">
-              <label for="pnum">Phone Number</label>
-              <input type="text" id="pnum" name="pnum" />
+              <input
+                type="text"
+                id="pnum"
+                name="pnum"
+                placeholder="Phone number"
+              />
             </div>
           </div>
           <div class="billingDouble">
             <div class="field">
-              <label for="email">Email Address</label>
-              <input type="text" id="email" name="email" />
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email address"
+              />
+            </div>
+          </div>
+          <div class="paySubtitle">Address</div>
+
+          <div class="billingDouble">
+            <div class="field">
+              <input
+                type="text"
+                id="street1"
+                name="street1"
+                placeholder="Street, house/apartment"
+              />
+            </div>
+            <div class="field">
+              <input
+                type="text"
+                id="street2"
+                name="street2"
+                placeholder="Apt, Suite, Unit, etc."
+              />
             </div>
           </div>
           <div class="billingDouble">
             <div class="field">
-              <label for="street1">Street address</label>
-              <input type="text" id="street1" name="street1" />
+              <input
+                type="text"
+                id="country"
+                name="country"
+                placeholder="Country"
+              />
             </div>
             <div class="field">
-              <label for="street2">Street address 2</label>
-              <input type="text" id="street2" name="street2" />
-            </div>
-          </div>
-          <div class="billingDouble">
-            <div class="field">
-              <label for="country">Country</label>
-              <input type="text" id="country" name="country" />
-            </div>
-            <div class="field">
-              <label for="state">State/Province</label>
-              <input type="text" id="state" name="state" />
+              <input
+                type="text"
+                id="state"
+                name="state"
+                placeholder="State/Province/Region"
+              />
             </div>
           </div>
           <div class="billingDouble">
             <div class="field">
-              <label for="city">City</label>
-              <input type="text" id="city" name="city" />
+              <input type="text" id="city" name="city" placeholder="City" />
             </div>
             <div class="field">
-              <label for="zip">Zip Code</label>
-              <input type="text" id="zip" name="zip" />
+              <input type="text" id="zip" name="zip" placeholder="Zip code" />
             </div>
           </div>
         </div>
       </div>
       <div class="orderFooter orderNav">
         <button
-          class="backButton"
+          class="proceedButton"
           [ngClass]="{ disabledButton: basket.length === 0 }"
           (click)="payButton(-1)"
         >
-          <span class="add proceedText">BACK</span>
+          <back></back>
         </button>
 
         <button
-          class="proceedButton"
+          class="proceedButton nextBtn"
           [ngClass]="{ disabledButton: basket.length === 0 }"
           (click)="
             payButton(
@@ -292,7 +321,7 @@
             )
           "
         >
-          <span class="add proceedText">CONTINUE</span>
+          <next></next>
         </button>
       </div>
     </div>
@@ -301,15 +330,15 @@
       <div class="payContent"></div>
       <div class="orderFooter orderNav">
         <button
-          class="backButton"
+          class="proceedButton"
           [ngClass]="{ disabledButton: basket.length === 0 }"
           (click)="payButton(-1)"
         >
-          <span class="add proceedText">BACK</span>
+          <back></back>
         </button>
 
         <button
-          class="proceedButton"
+          class="proceedButton nextBtn"
           [ngClass]="{ disabledButton: basket.length === 0 }"
           (click)="
             payButton(
@@ -319,7 +348,7 @@
             )
           "
         >
-          <span class="add proceedText">CONTINUE</span>
+          <next></next>
         </button>
       </div>
     </div>
@@ -328,11 +357,11 @@
       <div class="payContent"></div>
       <div class="orderFooter orderNav">
         <button
-          class="backButton"
+          class="proceedButton"
           [ngClass]="{ disabledButton: basket.length === 0 }"
           (click)="payButton(-1)"
         >
-          <span class="add proceedText">BACK</span>
+          <back></back>
         </button>
 
         <div class="filler"></div>

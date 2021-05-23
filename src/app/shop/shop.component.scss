@@ -160,7 +160,7 @@ info {
   width: 100%;
   min-height: 0;
   min-width: 0;
-  margin-top: 1em;
+  margin-top: 1rem;
   display: flex;
   // justify-content: center;
   align-items: center;
@@ -312,6 +312,10 @@ p {
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: flex-end;
+  flex: 0 1 5rem;
+}
+
+.firstOrderFooter {
   flex: 0 1 15%;
 }
 
@@ -342,31 +346,44 @@ p {
 .proceedButton {
   border: 0;
   height: 90%;
-  flex: 0 1 50%;
-  background: #19180a;
+  flex: 1 1 50%;
+  background-color: transparent;
   font-size: 1rem;
   font-family: "Poppins";
   font-weight: 300;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   border-radius: 10vh 0 0 0;
   align-items: center;
   position: relative;
-  // transition: transform 0.5s ease-in-out 1s, background 0.5s ease-out,
-  //   opacity 0.5s ease-in-out;
+  transition: background-color 0.25s ease-out;
 }
 
-.proceedText {
-  margin: 0;
+.nextBtn {
+  justify-content: flex-end;
 }
 
-.disabledButton {
-  background: gray;
+.disabledButton next svg {
+  background: red;
 }
 
 .proceedButton:active:not(.disabledButton) {
-  opacity: 0.3;
-  transition: opacity 0.05;
+}
+
+.proceedButton:active:not(.disabledButton) back {
+  transform: rotateZ(-60deg);
+  color: #f8f0fb;
+}
+
+.proceedButton:active:not(.disabledButton) next {
+  transform: rotateZ(60deg);
+  color: #f8f0fb;
+}
+
+next,
+back {
+  width: 5rem;
+  transition: transform 0.15s ease-in-out;
 }
 
 .order {
@@ -380,7 +397,7 @@ p {
   flex: 0 0 50%;
   min-height: 0;
   min-width: 0;
-  margin-top: 1em;
+  margin-top: 1rem;
   border-radius: 35%;
   max-width: 100%;
   max-height: 100%;
@@ -489,6 +506,7 @@ clear {
 }
 
 .payContent {
+  min-width: 100vw;
   flex: 1 1 auto;
   display: flex;
   flex-flow: column nowrap;
@@ -496,29 +514,15 @@ clear {
   align-items: center;
 }
 
+table {
+  min-width: 100%;
+}
+
 .basketSection {
   overflow: hidden;
   flex-flow: row nowrap;
   justify-content: unset;
 }
-
-.backButton {
-  border: 0;
-  height: 90%;
-  flex: 0 1 30%;
-  background: #19180a;
-  font-size: 1rem;
-  font-family: "Poppins";
-  font-weight: 300;
-  display: flex;
-  justify-content: center;
-  border-radius: 0 10vh 0 0;
-  align-items: center;
-  position: relative;
-  // transition: transform 0.5s ease-in-out 1s, background 0.5s ease-out,
-  //   opacity 0.5s ease-in-out;
-}
-
 .orderNav {
   justify-content: space-between;
 }
@@ -529,7 +533,7 @@ clear {
   padding: 0;
   width: 100vw;
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin: 1rem 0;
 }
 
 td {
@@ -620,10 +624,9 @@ tr {
 
 .field input {
   border: none;
-  background-color: transparent;
-  border-bottom: 2px solid #19180a;
-  transition: border-bottom 0.25s ease-in-out,
-    background-color 0.25s ease-in-out;
+  background-color: #00000007;
+  // border-bottom: 2px solid #19180a;
+  transition: border 0.25s ease-in-out, background-color 0.25s ease-in-out;
   outline: none;
   border-radius: 50vh;
   padding: 0 0.75rem;
@@ -635,8 +638,17 @@ tr {
 }
 
 .field input:focus {
-  background-color: #00000007;
-  border-bottom: 3px solid #19180a;
+  background-color: transparent;
+  border: 1px solid #19180a;
   border-radius: 50vh;
   outline: none;
+}
+
+.paySubtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 0;
+  width: 100vw;
+  text-align: left;
+  margin: 1rem 0 1rem 2rem;
 }

@@ -12,6 +12,8 @@ import player from 'lottie-web';
 import { CartComponent } from './logo/cart/cart.component';
 import { ClearComponent } from './logo/clear/clear.component';
 import { CheckComponent } from './logo/check/check.component';
+import { NextComponent } from './logo/next/next.component';
+import { BackComponent } from './logo/back/back.component';
 
 export function playerFactory() {
     return player;
@@ -27,6 +29,8 @@ export function playerFactory() {
         CartComponent,
         ClearComponent,
         CheckComponent,
+        NextComponent,
+        BackComponent,
     ],
     imports: [
         BrowserModule,

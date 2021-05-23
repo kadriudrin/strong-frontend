@@ -145,3 +145,11 @@ path {
     font-size: 64px;
   }
 }
+
+*:focus {
+  outline: none;
+}
+
+* {
+  user-select: none;
+}
